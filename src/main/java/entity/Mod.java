@@ -1,11 +1,11 @@
-package com.inso.MinecraftProject.dto;
+package com.inso.MinecraftProject.entity;
 
 import lombok.*;
 
 import java.util.List;
 
 /**
- * DTO Class to represent a mod and its dependencies
+ * Entity Class to represent a mod and its dependencies
  */
 @Data
 @Builder
