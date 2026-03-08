@@ -105,10 +105,10 @@ body#page-home::before {
 #main-content {
     flex: 1;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
     padding: 0 80px;
-    margin-top: -60px;  
+    margin-top: 40px;  
 }
 
 /* Button */
@@ -210,4 +210,33 @@ body#page-home::before {
         padding: 15px 40px;
         border-radius: 40px;
     }
+}
+
+/* INFO SECTION */
+
+#info-section{
+    padding: 120px 80px;
+    background: rgba(0,0,0,0.55);
+    margin-top: 50vh;
+}
+
+.info-container{
+    max-width: 900px;
+    margin: auto;
+}
+
+#info-section h2{
+    color: white;
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    font-family: 'Monocraft', sans-serif;
+}
+
+#info-section p{
+    color: #eaeaea;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    font-family: 'Monocraft', sans-serif;
 }
