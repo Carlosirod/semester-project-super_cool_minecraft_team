@@ -38,7 +38,7 @@
     box-sizing: border-box;
 }
 
-body#page-home {
+.site-background {
 
     /* BACKGROUND IMAGE */
     background-image: url("images/minecraft-background.png");
@@ -61,6 +61,15 @@ body#page-home::before {
     inset: 0;
     background: rgba(0,0,0,0.35);
     z-index: -1;
+}
+
+body#page-about::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: -1;
+    padding: 20px;
 }
 
 /* HEADER  */
