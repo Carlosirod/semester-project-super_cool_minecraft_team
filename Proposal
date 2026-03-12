@@ -382,432 +382,730 @@ Scalability:
 - The system shall support growth in mod volume, dependency complexity, and user activity without requiring architectural redesign.
 - The subsystem architecture shall allow integration of additional mod sources or APIs in future iterations.
 
-2.4 Terminology
+== 2.4 Terminology
 
 This section defines the core terms that will be used throughout the project. These definitions apply to both the backend dependency logic and the frontend graph interface.
 
-Goal -> Keep the language consistent across documentation and communication.
+*Goal:* Keep the language consistent across documentation and communication.
 
 Each term includes:
 
-->Classification (Entity, Relation, Attribute, Event, Behavior)
-->Phase Introduced (Domain = Minecraft ecosystem concept, System = project-specific concept)
-->Definition (Implementation-independent)
+* Classification (Entity, Relation, Attribute, Event, Behavior)
+* Phase Introduced  
+  **Domain** = Minecraft ecosystem concept  
+  **System** = project-specific concept
+* Definition (implementation-independent)
 
-##################################################################
-Dependency Resolution / Mod Graph Terminology
-##################################################################
+[cols="1"]
+|===
+|Dependency Resolution / Mod Graph Terminology
+|===
 
-1. Mod (Modification)
 
-Classification: Entity
-Phase Introduced: Domain
-Definition: A mod (modification) is a packaged software extension that alters or adds functionality to Minecraft. A mod may introduce new content, mechanics, or systems and may declare dependencies or incompatibilities with other mods.
+=== Mod (Modification)
 
-2. Dependency
+*Classification:* Entity  
+*Phase Introduced:* Domain  
 
-Classification: Relation
-Phase Introduced: Domain
-Definition: A dependency is a directed relationship in which one mod requires another mod in order to function correctly. If the required mod is missing or does not satisfy the stated version constraint, the dependent mod cannot operate as intended.
+Definition::
+A mod (modification) is a packaged software extension that alters or adds functionality to Minecraft. A mod may introduce new content, mechanics, or systems and may declare dependencies or incompatibilities with other mods.
 
-3. Optional Dependency
 
-Classification: Relation
-Phase Introduced: Domain
-Definition: A relationship where a mod can integrate with another mod if it is present, but does not require it for core functionality.
+=== Dependency
 
-4. Incompatibility
+*Classification:* Relation  
+*Phase Introduced:* Domain  
 
-Classification: Relation
-Phase Introduced: Domain
-Definition: A condition where two mods cannot coexist within the same mod environment due to conflicting functionality or explicit incompatibility rules.
+Definition::
+A dependency is a directed relationship in which one mod requires another mod in order to function correctly. If the required mod is missing or does not satisfy the stated version constraint, the dependent mod cannot operate as intended.
 
-5. Version
 
-Classification: Attribute
-Phase Introduced: Domain
-Definition: A structured identifier assigned to a specific release of a mod. Versions are used to distinguish releases and evaluate compatibility between mods.
+=== Optional Dependency
 
-6. Version Constraint
+*Classification:* Relation  
+*Phase Introduced:* Domain  
 
-Classification: Attribute
-Phase Introduced: Domain
-Definition: A rule that specifies which versions of a mod are acceptable within a dependency relationship. A version constraint defines a valid range or condition that must be satisfied.
+Definition::
+A relationship where a mod can integrate with another mod if it is present, but does not require it for core functionality.
 
-7. Minecraft Version
 
-Classification: Entity
-Phase Introduced: Domain
-Definition: A specific release of Minecraft and its updates. It defines the base environment and APIs that mods and mod loader target. Important for the compatibility constraint in the dependency graph.
+=== Incompatibility
 
-8. Mod Loader
+*Classification:* Relation  
+*Phase Introduced:* Domain  
 
-Classification: Entity
-Phase Introduced: Domain
-Definition: A runtime framework responsible for loading and managing mods within Minecraft. A mod loader establishes compatibility rules and governs how mods are initialized and executed.
+Definition::
+A condition where two mods cannot coexist within the same mod environment due to conflicting functionality or explicit incompatibility rules.
 
-9. Fabric
 
-Classification: Entity
-Phase Introduced: Domain
-Definition: The mod loader to be used for this project. It provides the framework for loading mods.
+=== Version
 
-10. Mod Instance
+*Classification:* Attribute  
+*Phase Introduced:* Domain  
 
-Classification: Entity
-Phase Introduced: System
-Definition: A specific occurrence of a mod identified by name and version within the system. A mod instance represents a concrete node in the dependency graph.
+Definition::
+A structured identifier assigned to a specific release of a mod. Versions are used to distinguish releases and evaluate compatibility between mods.
 
-11. Mod pack
 
-Classification: Entity
-Phase Introduced: Domain
-Definition: A collection of mod instances, their version, and associated configuration files.
+=== Version Constraint
 
-12. Dependency Graph
+*Classification:* Attribute  
+*Phase Introduced:* Domain  
 
-Classification: Entity
-Phase Introduced: System
-Definition: A directed graph structure that represents mod instances as nodes and dependency relationships as edges. The graph models how mods depend on one another.
+Definition::
+A rule that specifies which versions of a mod are acceptable within a dependency relationship. A version constraint defines a valid range or condition that must be satisfied.
 
-13. Node
 
-Classification: Entity
-Phase Introduced: System
-Definition: A logical and visual representation of a mod instance within the dependency graph.
+=== Minecraft Version
 
-14. Edge
+*Classification:* Entity  
+*Phase Introduced:* Domain  
 
-Classification: Relation
-Phase Introduced: System
-Definition: A directed connection between two nodes that represents a dependency relationship.
+Definition::
+A specific release of Minecraft and its updates. It defines the base environment and APIs that mods and mod loader target. Important for the compatibility constraint in the dependency graph.
 
-15. Transitive Dependency
 
-Classification: Relation
-Phase Introduced: System
-Definition: A dependency that arises indirectly through other dependencies.
+=== Mod Loader
 
-16. Resolution
+*Classification:* Entity  
+*Phase Introduced:* Domain  
 
-Classification: Behavior
-Phase Introduced: System
-Definition: The process of evaluating whether all declared dependencies within a given mod set are satisfied according to version constraints and compatibility rules.
+Definition::
+A runtime framework responsible for loading and managing mods within Minecraft. A mod loader establishes compatibility rules and governs how mods are initialized and executed.
 
-17. Dependency Resolution
 
-Classification: Behavior
-Phase Introduced: Domain
-Definition: The conceptual process of analyzing a modpack to determine whether all required dependencies are present, compatible, and satisfiable.
+=== Fabric
 
-18. Resolution Result
+*Classification:* Entity  
+*Phase Introduced:* Domain  
 
-Classification: Entity
-Phase Introduced: Domain
-Definition: The outcome of dependency analysis, indicating satisfied, missing, or conflicting dependencies.
+Definition::
+The mod loader to be used for this project. It provides the framework for loading mods.
 
-19. Conflict
 
-Classification: Event
-Phase Introduced: System
-Definition: A condition that occurs when dependency requirements or version constraints cannot be satisfied simultaneously. A conflict prevents successful resolution of the mod set.
+=== Mod Instance
 
-20. Compatibility
+*Classification:* Entity  
+*Phase Introduced:* System  
 
-Classification: Attribute
-Phase Introduced: Domain
-Definition: The state in which two or more mods, versions, or loaders can operate together without violating declared dependencies or constraints.
+Definition::
+A specific occurrence of a mod identified by name and version within the system. A mod instance represents a concrete node in the dependency graph.
 
-21. Installation State
 
-Classification: Attribute
-Phase Introduced: System
-Definition: The current status of a mod instance within the managed environment, such as installed, missing, unresolved, or conflicting.
+=== Modpack
 
-22. Profile
+*Classification:* Entity  
+*Phase Introduced:* Domain  
 
-Classification: Entity
-Phase Introduced: System
-Definition: A named container that stores a user’s mod instances and their installation statuses.
+Definition::
+A collection of mod instances, their version, and associated configuration files.
 
-23. User
 
-Classification: Entity
-Phase Introduced: Domain
-Definition: An individual who analyzes modpacks and their dependency relationships using the system.
+=== Dependency Graph
 
-24. Mod Source
+*Classification:* Entity  
+*Phase Introduced:* System  
 
-Classification: Entity
-Phase Introduced: Domain
-Definition:An external repository or platform where mod files and versions can be obtained.
+Definition::
+A directed graph structure that represents mod instances as nodes and dependency relationships as edges. The graph models how mods depend on one another.
 
-25. Download Task
 
-Classification: Entity
-Phase Introduced: Domain
-Definition: A conceptual process representing the retrieval of a specific mod version required to satisfy a dependency.
+=== Node
 
-26. Retrieved Mod
+*Classification:* Entity  
+*Phase Introduced:* System  
 
-Classification: Entity
-Phase Introduced: Domain
-Definition: A mod that has been successfully obtained from a mod source to fulfill a dependency requirement.
+Definition::
+A logical and visual representation of a mod instance within the dependency graph.
 
-27. Resolve Dependencies
 
-Classification: Behavior
-Phase Introduced: Domain
-Definition: The process of analyzing all mods within a modpack and determining whether their declared dependencies are satisfied.
+=== Edge
 
-28. Find Missing Dependencies
+*Classification:* Relation  
+*Phase Introduced:* System  
 
-Classification: Behavior
-Phase Introduced: Domain
-Definition: The process of identifying required dependencies that are not present in the current modpack.
+Definition::
+A directed connection between two nodes that represents a dependency relationship.
 
-29. Detect Conflicts
 
-Classification: Behavior
-Phase Introduced: Domain
-Definition: The process of identifying incompatibilities or conflicting mods within a modpack.
+=== Transitive Dependency
 
-30. Check Version Rules
+*Classification:* Relation  
+*Phase Introduced:* System  
 
-Classification: Behavior
-Phase Introduced: Domain
-Definition: The process of verifying that installed mod versions satisfy declared dependency version constraints.
+Definition::
+A dependency that arises indirectly through other dependencies.
 
-31. Locate Mod Sources
 
-Classification: Behavior
-Phase Introduced: Domain
-Definition: The process of identifying potential repositories where missing dependencies may be obtained.
+=== Resolution
 
-32. Build Dependency Graph
+*Classification:* Behavior  
+*Phase Introduced:* System  
 
-Classification: Behavior
-Phase Introduced: System
-Definition: The process of constructing the dependency graph by adding mod nodes and dependency edges.
+Definition::
+The process of evaluating whether all declared dependencies within a given mod set are satisfied according to version constraints and compatibility rules.
 
-33. Export Dependency Graph
 
-Classification: Behavior
-Phase Introduced: System
-Definition: The process of converting the dependency graph into a JSON representation suitable for visualization.
+=== Dependency Resolution
 
+*Classification:* Behavior  
+*Phase Introduced:* Domain  
 
-##################################################################
-Mod Uploading Terminology
-##################################################################
+Definition::
+The conceptual process of analyzing a modpack to determine whether all required dependencies are present, compatible, and satisfiable.
 
-Term: UploadSession
-Classification: Entity
-Phase: Domain
-Definition: The complete process of uploading one or more mod files, from initial selection to final confirmation.
 
-Term: ModFile
-Classification: Entity
-Phase: Domain
-Definition: The actual game modification file being uploaded, typically in .jar, .zip, or .rar format.
+=== Resolution Result
 
-Term: UploadQueue
-Classification: Entity
-Phase: System
-Definition: A visual list component displaying all files selected for upload and their current processing status.
+*Classification:* Entity  
+*Phase Introduced:* Domain  
 
-Term: UploadStatus
-Classification: Attribute
-Phase: System
-Definition: The current state of an upload (idle, uploading, paused, completed, failed, or cancelled).
+Definition::
+The outcome of dependency analysis, indicating satisfied, missing, or conflicting dependencies.
 
-Term: FilePicker
-Classification: Entity
-Phase: System
-Definition: A UI component that opens the system dialog for users to browse and select files from their computer.
 
-Term: DragAndDropZone
-Classification: Entity
-Phase: System
-Definition: A designated UI area where users can drag files directly from their desktop to initiate upload.
+=== Conflict
 
-Term: FileSelected
-Classification: Event
-Phase: Domain
-Definition: User action of choosing a file through the file picker dialog.
+*Classification:* Event  
+*Phase Introduced:* System  
 
-Term: FileDropped
-Classification: Event
-Phase: Domain
-Definition: User action of dragging and releasing a file into the drag and drop zone.
+Definition::
+A condition that occurs when dependency requirements or version constraints cannot be satisfied simultaneously. A conflict prevents successful resolution of the mod set.
 
-Term: UploadStarted
-Classification: Event
-Phase: Domain
-Definition: User action of initiating the upload process after file selection.
 
-Term: UploadCancelled
-Classification: Event
-Phase: Domain
-Definition: User action that aborts an ongoing file upload.
+=== Compatibility
 
-Term: UploadPaused
-Classification: Event
-Phase: Domain
-Definition: User action that temporarily stops an active upload.
+*Classification:* Attribute  
+*Phase Introduced:* Domain  
 
-Term: UploadResumed
-Classification: Event
-Phase: Domain
-Definition: User action that continues a paused upload.
+Definition::
+The state in which two or more mods, versions, or loaders can operate together without violating declared dependencies or constraints.
 
-Term: RetryUpload
-Classification: Event
-Phase: Domain
-Definition: User action that attempts to upload a previously failed file again.
 
-Term: UploadProgress
-Classification: Attribute
-Phase: System
-Definition: Numerical value (0-100%) indicating how much of a file has been successfully transferred.
+=== Installation State
 
-Term: ProgressIndicator
-Classification: Entity
-Phase: System
-Definition: Visual element showing upload completion percentage, can be a progress bar, spinner, or percentage text.
+*Classification:* Attribute  
+*Phase Introduced:* System  
 
-Term: FilePreview
-Classification: Entity
-Phase: System
-Definition: Thumbnail, icon, or filename display representing the uploaded file.
+Definition::
+The current status of a mod instance within the managed environment, such as installed, missing, unresolved, or conflicting.
 
-Term: ValidationFeedback
-Classification: Behavior
-Phase: System
-Definition: Visual messages displayed to users indicating if a selected file meets requirements.
 
-Term: ValidationError
-Classification: Attribute
-Phase: System
-Definition: A specific message indicating why a file was rejected (wrong format, too large, etc.).
+=== Profile
 
-Term: FileSizeWarning
-Classification: Attribute
-Phase: System
-Definition: Notification that the selected file exceeds recommended size limits.
+*Classification:* Entity  
+*Phase Introduced:* System  
 
-Term: UploadComplete
-Classification: Event
-Phase: Domain
-Definition: Notification that all files have been successfully transferred to the server.
+Definition::
+A named container that stores a user’s mod instances and their installation statuses.
 
-Term: MetadataForm
-Classification: Entity
-Phase: System
-Definition: UI form where users can add additional information about the uploaded mod.
 
-Term: CancelButton
-Classification: Entity
-Phase: System
-Definition: UI element that allows users to abort an ongoing upload.
-
-Term: TimeRemaining
-Classification: Attribute
-Phase: System
-Definition: Estimated time display showing how long until upload completes.
-
-Term: UploadSpeed
-Classification: Attribute
-Phase: System
-Definition: Real-time display of data transfer rate during upload.
-
-
-2.7 Domain Events
-
-    - Event 1: Modpack Uploaded
-      Triggered when a user uploads a modpack or mod collection for analysis.
-      Outcome: The system initiates metadata parsing and begins extracting dependency information from all included mods.
-      State Change: The modpack transitions from "not analyzed" to "parsing in progress."
-
-    - Event 2: Dependencies Extracted
-      Triggered when metadata parsing completes and all mod dependencies are successfully identified.
-      Outcome: The system classifies each dependency as required, optional, or incompatible and prepares data for graph construction.
-      State Change: Dependency data transitions from "raw metadata" to "normalized and classified."
-
-    - Event 3: Dependency Graph Generated
-      Triggered when the system successfully constructs the dependency graph from normalized dependency data.
-      Outcome: The graph is made available for visualization and analysis, representing all mods as nodes and their relationships as directed edges.
-      State Change: The modpack analysis transitions to "graph ready for visualization."
-
-    - Event 4: Missing Dependency Detected
-      Triggered when the system identifies that a mod declares a required dependency that is not present in the modpack.
-      Outcome: The system flags the missing dependency, identifies which mod requires it, and signals a critical configuration error.
-      State Change: The modpack configuration transitions to "invalid - missing required dependency."
-
-    - Event 5: Incompatibility Detected
-      Triggered when the system identifies that two or more mods in the modpack declare mutual incompatibility.
-      Outcome: The system highlights the conflicting mods and the reason for incompatibility in the dependency graph.
-      State Change: The modpack configuration transitions to "invalid - incompatibility conflict."
-
-    - Event 6: Circular Dependency Detected
-      Triggered when the system identifies a cycle in the dependency graph (e.g., Mod A requires Mod B, and Mod B requires Mod A).
-      Outcome: The system reports the circular dependency chain and prevents graph construction from entering an infinite loop.
-      State Change: The modpack configuration transitions to "invalid - circular dependency."
-
-    - Event 7: Version Constraint Violation Detected
-      Triggered when a mod's version does not satisfy the version constraints specified by its dependent mods.
-      Outcome: The system identifies which mods have incompatible versions and suggests compatible alternatives or version updates.
-      State Change: The modpack configuration transitions to "invalid - version constraint violation."
-
-    - Event 8: Transitive Dependencies Resolved
-      Triggered when the system expands the dependency graph to include all transitive dependencies (dependencies of dependencies).
-      Outcome: The complete dependency chain is made visible, showing not only direct dependencies but also indirect requirements.
-      State Change: The modpack representation transitions from "direct dependencies only" to "complete transitive dependency view."
-
-    - Event 9: Modpack Configuration Validated
-      Triggered when all dependency checks, incompatibility checks, and version constraint validations complete successfully.
-      Outcome: The system marks the modpack as structurally valid and ready for use, providing a summary of all valid mods and dependencies.
-      State Change: The modpack configuration transitions to "valid and ready for deployment."
-
-    - Event 10: Mod Removed or Updated
-      Triggered when a user modifies the modpack by removing a mod or updating an existing mod to a new version.
-      Outcome: The system recalculates the dependency graph, identifies new missing dependencies or incompatibilities, and updates the visualization.
-      State Change: The modpack configuration reverts to analysis mode and reassesses validity based on the new composition.
-
-    - Event 11: Dependency Graph Visualized
-      Triggered when the system renders the dependency graph for user interaction and exploration.
-      Outcome: Users can select mods, view which mods depend on them, understand why dependencies are required, and explore impact of potential removals.
-      State Change: The modpack transitions from "analyzed" to "interactive visualization available."
-
-    - Event 12: Dependency Has Just Been Declared
-      Triggered when a mod explicitly declares a required relationship with another mod within its metadata.
-      Outcome: The system records the dependency as a directed relationship in the dependency model and prepares it for validation and resolution.
-      State Change: The dependency model transitions from "no declared relationship" to "declared dependency recorded."
-
-    - Event 13: Mod Has Just Been Added To Modpack
-      Triggered when a user adds a new mod to an existing modpack configuration.
-      Outcome: The system updates the modpack composition, re-evaluates declared dependencies and incompatibilities, and schedules dependency resolution if required.
-      State Change: The modpack configuration transitions from "stable composition" to "composition modified - revalidation required."
-
-    - Event 14: Dependency Resolution Has Just Been Completed
-      Triggered when the system completes the process of resolving all declared dependencies for the current modpack configuration.
-      Outcome: The system determines whether all required mods are present and whether any dependencies remain unsatisfied.
-      State Change: The dependency resolution process transitions from "in progress" to either "resolved successfully" or "resolution failed."
-
-    - Event 15: Retrieved Mod Has Just Been Obtained
-      Triggered when a required mod is successfully retrieved from a mod source to satisfy a previously declared dependency.
-      Outcome: The retrieved mod is added to the modpack configuration and incorporated into the dependency graph for further validation.
-      State Change: The modpack transitions from "dependency unsatisfied" to "dependency provisionally satisfied pending validation."
-
-    - Event 16: Dependency Has Just Become Unsatisfied
-      Triggered when a previously satisfied dependency becomes invalid due to mod removal, version change, or constraint violation.
-      Outcome: The system flags the dependency as unsatisfied and initiates corrective actions such as retrieval suggestions or configuration warnings.
-      State Change: The modpack configuration transitions from "dependency satisfied" to "dependency unsatisfied."
-
-    - Event 17: Modpack Has Just Become Consistent
-      Triggered when all declared dependencies are satisfied and no declared incompatibilities are violated within the modpack configuration.
-      Outcome: The system confirms the structural integrity of the modpack and allows it to proceed to validation or deployment stages.
-      State Change: The modpack configuration transitions from "inconsistent or under validation" to "consistent configuration state."
+=== User
+
+*Classification:* Entity  
+*Phase Introduced:* Domain  
+
+Definition::
+An individual who analyzes modpacks and their dependency relationships using the system.
+
+
+=== Mod Source
+
+*Classification:* Entity  
+*Phase Introduced:* Domain  
+
+Definition::
+An external repository or platform where mod files and versions can be obtained.
+
+
+=== Download Task
+
+*Classification:* Entity  
+*Phase Introduced:* Domain  
+
+Definition::
+A conceptual process representing the retrieval of a specific mod version required to satisfy a dependency.
+
+
+=== Retrieved Mod
+
+*Classification:* Entity  
+*Phase Introduced:* Domain  
+
+Definition::
+A mod that has been successfully obtained from a mod source to fulfill a dependency requirement.
+
+
+=== Resolve Dependencies
+
+*Classification:* Behavior  
+*Phase Introduced:* Domain  
+
+Definition::
+The process of analyzing all mods within a modpack and determining whether their declared dependencies are satisfied.
+
+
+=== Find Missing Dependencies
+
+*Classification:* Behavior  
+*Phase Introduced:* Domain  
+
+Definition::
+The process of identifying required dependencies that are not present in the current modpack.
+
+
+=== Detect Conflicts
+
+*Classification:* Behavior  
+*Phase Introduced:* Domain  
+
+Definition::
+The process of identifying incompatibilities or conflicting mods within a modpack.
+
+
+=== Check Version Rules
+
+*Classification:* Behavior  
+*Phase Introduced:* Domain  
+
+Definition::
+The process of verifying that installed mod versions satisfy declared dependency version constraints.
+
+
+=== Locate Mod Sources
+
+*Classification:* Behavior  
+*Phase Introduced:* Domain  
+
+Definition::
+The process of identifying potential repositories where missing dependencies may be obtained.
+
+
+=== Build Dependency Graph
+
+*Classification:* Behavior  
+*Phase Introduced:* System  
+
+Definition::
+The process of constructing the dependency graph by adding mod nodes and dependency edges.
+
+
+=== Export Dependency Graph
+
+*Classification:* Behavior  
+*Phase Introduced:* System  
+
+Definition::
+The process of converting the dependency graph into a JSON representation suitable for visualization.
+
+
+
+== Mod Uploading Terminology
+
+=== UploadSession
+
+*Classification:* Entity  
+*Phase:* Domain  
+
+Definition::
+The complete process of uploading one or more mod files, from initial selection to final confirmation.
+
+
+=== ModFile
+
+*Classification:* Entity  
+*Phase:* Domain  
+
+Definition::
+The actual game modification file being uploaded, typically in `.jar`, `.zip`, or `.rar` format.
+
+
+=== UploadQueue
+
+*Classification:* Entity  
+*Phase:* System  
+
+Definition::
+A visual list component displaying all files selected for upload and their current processing status.
+
+
+=== UploadStatus
+
+*Classification:* Attribute  
+*Phase:* System  
+
+Definition::
+The current state of an upload (idle, uploading, paused, completed, failed, or cancelled).
+
+
+=== FilePicker
+
+*Classification:* Entity  
+*Phase:* System  
+
+Definition::
+A UI component that opens the system dialog for users to browse and select files from their computer.
+
+
+=== DragAndDropZone
+
+*Classification:* Entity  
+*Phase:* System  
+
+Definition::
+A designated UI area where users can drag files directly from their desktop to initiate upload.
+
+=== FileSelected
+
+*Classification:* Event  
+*Phase:* Domain  
+
+Definition::
+User action of choosing a file through the file picker dialog.
+
+
+=== FileDropped
+
+*Classification:* Event  
+*Phase:* Domain  
+
+Definition::
+User action of dragging and releasing a file into the drag and drop zone.
+
+
+=== UploadStarted
+
+*Classification:* Event  
+*Phase:* Domain  
+
+Definition::
+User action of initiating the upload process after file selection.
+
+
+=== UploadCancelled
+
+*Classification:* Event  
+*Phase:* Domain  
+
+Definition::
+User action that aborts an ongoing file upload.
+
+
+=== UploadPaused
+
+*Classification:* Event  
+*Phase:* Domain  
+
+Definition::
+User action that temporarily stops an active upload.
+
+
+=== UploadResumed
+
+*Classification:* Event  
+*Phase:* Domain  
+
+Definition::
+User action that continues a paused upload.
+
+
+=== RetryUpload
+
+*Classification:* Event  
+*Phase:* Domain  
+
+Definition::
+User action that attempts to upload a previously failed file again.
+
+
+=== UploadProgress
+
+*Classification:* Attribute  
+*Phase:* System  
+
+Definition::
+Numerical value (0–100%) indicating how much of a file has been successfully transferred.
+
+
+=== ProgressIndicator
+
+*Classification:* Entity  
+*Phase:* System  
+
+Definition::
+Visual element showing upload completion percentage, which may appear as a progress bar, spinner, or percentage text.
+
+
+=== FilePreview
+
+*Classification:* Entity  
+*Phase:* System  
+
+Definition::
+Thumbnail, icon, or filename display representing the uploaded file.
+
+
+=== ValidationFeedback
+
+*Classification:* Behavior  
+*Phase:* System  
+
+Definition::
+Visual messages displayed to users indicating whether a selected file meets upload requirements.
+
+
+=== ValidationError
+
+*Classification:* Attribute  
+*Phase:* System  
+
+Definition::
+A specific message indicating why a file was rejected (for example: unsupported format or file too large).
+
+
+=== FileSizeWarning
+
+*Classification:* Attribute  
+*Phase:* System  
+
+Definition::
+Notification that the selected file exceeds recommended size limits.
+
+
+=== UploadComplete
+
+*Classification:* Event  
+*Phase:* Domain  
+
+Definition::
+Notification that all files have been successfully transferred to the server.
+
+
+=== MetadataForm
+
+*Classification:* Entity  
+*Phase:* System  
+
+Definition::
+UI form where users can add additional information about the uploaded mod.
+
+
+=== CancelButton
+
+*Classification:* Entity  
+*Phase:* System  
+
+Definition::
+UI element that allows users to abort an ongoing upload.
+
+
+=== TimeRemaining
+
+*Classification:* Attribute  
+*Phase:* System  
+
+Definition::
+Estimated time display showing how long until the upload completes.
+
+
+=== UploadSpeed
+
+*Classification:* Attribute  
+*Phase:* System  
+
+Definition::
+Real-time display of data transfer rate during the upload process.
+
+
+
+== 2.7 Domain Events
+
+=== Event 1: Modpack Uploaded
+
+Triggered when a user uploads a modpack or mod collection for analysis.
+
+Outcome::
+The system initiates metadata parsing and begins extracting dependency information from all included mods.
+
+State Change::
+The modpack transitions from `not analyzed` to `parsing in progress`.
+
+
+=== Event 2: Dependencies Extracted
+
+Triggered when metadata parsing completes and all mod dependencies are successfully identified.
+
+Outcome::
+The system classifies each dependency as required, optional, or incompatible and prepares data for graph construction.
+
+State Change::
+Dependency data transitions from `raw metadata` to `normalized and classified`.
+
+
+=== Event 3: Dependency Graph Generated
+
+Triggered when the system successfully constructs the dependency graph from normalized dependency data.
+
+Outcome::
+The graph becomes available for visualization and analysis, representing all mods as nodes and their relationships as directed edges.
+
+State Change::
+The modpack analysis transitions to `graph ready for visualization`.
+
+
+=== Event 4: Missing Dependency Detected
+
+Triggered when the system identifies that a mod declares a required dependency that is not present in the modpack.
+
+Outcome::
+The system flags the missing dependency, identifies which mod requires it, and signals a critical configuration error.
+
+State Change::
+The modpack configuration transitions to `invalid - missing required dependency`.
+
+
+=== Event 5: Incompatibility Detected
+
+Triggered when the system identifies that two or more mods in the modpack declare mutual incompatibility.
+
+Outcome::
+The system highlights the conflicting mods and the reason for incompatibility in the dependency graph.
+
+State Change::
+The modpack configuration transitions to `invalid - incompatibility conflict`.
+
+
+=== Event 6: Circular Dependency Detected
+
+Triggered when the system identifies a cycle in the dependency graph (for example, Mod A requires Mod B and Mod B requires Mod A).
+
+Outcome::
+The system reports the circular dependency chain and prevents graph construction from entering an infinite loop.
+
+State Change::
+The modpack configuration transitions to `invalid - circular dependency`.
+
+
+=== Event 7: Version Constraint Violation Detected
+
+Triggered when a mod's version does not satisfy the version constraints specified by its dependent mods.
+
+Outcome::
+The system identifies incompatible versions and suggests compatible alternatives or version updates.
+
+State Change::
+The modpack configuration transitions to `invalid - version constraint violation`.
+
+
+=== Event 8: Transitive Dependencies Resolved
+
+Triggered when the system expands the dependency graph to include all transitive dependencies.
+
+Outcome::
+The complete dependency chain becomes visible, showing both direct and indirect dependencies.
+
+State Change::
+The modpack representation transitions from `direct dependencies only` to `complete transitive dependency view`.
+
+
+=== Event 9: Modpack Configuration Validated
+
+Triggered when all dependency checks, incompatibility checks, and version constraint validations complete successfully.
+
+Outcome::
+The system marks the modpack as structurally valid and ready for use.
+
+State Change::
+The modpack configuration transitions to `valid and ready for deployment`.
+
+
+=== Event 10: Mod Removed or Updated
+
+Triggered when a user removes a mod or updates an existing mod to a new version.
+
+Outcome::
+The system recalculates the dependency graph and updates the visualization.
+
+State Change::
+The modpack configuration returns to `analysis mode` for revalidation.
+
+
+=== Event 11: Dependency Graph Visualized
+
+Triggered when the system renders the dependency graph for user interaction.
+
+Outcome::
+Users can explore dependencies, analyze relationships, and understand dependency impacts.
+
+State Change::
+The modpack transitions from `analyzed` to `interactive visualization available`.
+
+
+=== Event 12: Dependency Has Just Been Declared
+
+Triggered when a mod explicitly declares a required relationship with another mod within its metadata.
+
+Outcome::
+The system records the dependency and prepares it for validation and resolution.
+
+State Change::
+The dependency model transitions from `no declared relationship` to `declared dependency recorded`.
+
+
+=== Event 13: Mod Has Just Been Added To Modpack
+
+Triggered when a user adds a new mod to an existing modpack configuration.
+
+Outcome::
+The system updates the modpack composition and schedules dependency resolution.
+
+State Change::
+The configuration transitions from `stable composition` to `composition modified - revalidation required`.
+
+
+=== Event 14: Dependency Resolution Has Just Been Completed
+
+Triggered when the system completes the dependency resolution process.
+
+Outcome::
+The system determines whether all dependencies are satisfied.
+
+State Change::
+The process transitions from `in progress` to either `resolved successfully` or `resolution failed`.
+
+
+=== Event 15: Retrieved Mod Has Just Been Obtained
+
+Triggered when a required mod is successfully retrieved from a mod source.
+
+Outcome::
+The retrieved mod is added to the modpack and incorporated into the dependency graph.
+
+State Change::
+The modpack transitions from `dependency unsatisfied` to `dependency provisionally satisfied pending validation`.
+
+
+=== Event 16: Dependency Has Just Become Unsatisfied
+
+Triggered when a previously satisfied dependency becomes invalid due to mod removal or version change.
+
+Outcome::
+The system flags the dependency as unsatisfied and initiates corrective actions.
+
+State Change::
+The modpack transitions from `dependency satisfied` to `dependency unsatisfied`.
+
+
+=== Event 17: Modpack Has Just Become Consistent
+
+Triggered when all dependencies are satisfied and no incompatibilities remain.
+
+Outcome::
+The system confirms the structural integrity of the modpack.
+
+State Change::
+The configuration transitions from `under validation` to `consistent configuration state`.
+
 
 2.8 Interface Requirements
 
