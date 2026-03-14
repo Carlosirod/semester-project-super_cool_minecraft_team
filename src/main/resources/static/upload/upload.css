@@ -96,19 +96,16 @@ text-decoration:none;
 
 .page-subtitle{
 
-margin-top:8px;
-margin-bottom:18px;
+margin-top:50px;
+margin-bottom:8px;
 font-size:0.95rem;
 max-width:700px;
 margin-left:auto;
 margin-right:auto;
 opacity:0.9;
+line-height:1.5;
 
 }
-
-
-
-
 
 
 
@@ -117,8 +114,8 @@ opacity:0.9;
     display: flex;
     justify-content: center;
     gap: 50px;
-    margin-top: 70px;
-    padding: 40px;
+    margin-top: 10px;
+    padding: 10px 40px 40px 40px;
     flex-wrap: wrap;
 }
 
@@ -164,9 +161,9 @@ opacity:0.9;
 }
 
 .os-icon {
-    width:125px;
-    margin-bottom:20px;
-    image-rendering:pixelated;
+    width:80px;
+    margin-bottom:15px;
+    
 }
 
 .os-card h2 {
@@ -185,9 +182,7 @@ opacity:0.9;
     font-size: .95rem;
 }
 
-/* ===================================== */
 /* DETALLES BUTTONS - ESTILO BASE */
-/* ===================================== */
 .details-btn {
     border: 3px solid #333;
     color: white;
@@ -205,9 +200,7 @@ opacity:0.9;
     line-height: 1.2;
 }
 
-/* ===================================== */
 /* WINDOWS - DIAMOND */
-/* ===================================== */
 .windows .details-btn {
     background: var(--texture-diamond);
     background-size: 200px;
@@ -217,7 +210,7 @@ opacity:0.9;
     border-bottom-color: #0a5c66;
     border-right-color: #0a5c66;
     box-shadow: 0 5px 0 #0a5c66;
-    text-shadow: 2px 2px 0 #0a5c66;  /* AÑADIDO: sombra azul oscuro */
+    text-shadow: 2px 2px 0 #0a5c66;  
     transition: all .1s ease;
 }
 
@@ -234,9 +227,7 @@ opacity:0.9;
     filter: brightness(0.9);
 }
 
-/* ===================================== */
 /* MAC - STONE */
-/* ===================================== */
 .mac .details-btn {
     background: var(--texture-stone);
     background-size: 200px;
@@ -247,7 +238,7 @@ opacity:0.9;
     border-bottom-color: #3a3a3a;
     border-right-color: #3a3a3a;
     box-shadow: 0 5px 0 #3a3a3a;
-    text-shadow: 2px 2px 0 #2a2a2a;  /* AÑADIDO: sombra gris oscuro */
+    text-shadow: 2px 2px 0 #2a2a2a;  
     transition: all .1s ease;
 }
 
@@ -264,9 +255,7 @@ opacity:0.9;
     filter: brightness(0.9);
 }
 
-/* ===================================== */
 /* LINUX - WOOD */
-/* ===================================== */
 .linux .details-btn {
     background: var(--texture-wood);
     background-size: 200px;
@@ -278,7 +267,7 @@ opacity:0.9;
     border-bottom-color: #3a2410;
     border-right-color: #3a2410;
     box-shadow: 0 5px 0 #3a2410;
-    text-shadow: 2px 2px 0 #3a2410;  /* YA LO TENÍA */
+    text-shadow: 2px 2px 0 #3a2410;  
     transition: all .1s ease;
 }
 
