@@ -319,6 +319,7 @@ font-family: 'Monocraft', sans-serif;
     flex-wrap: wrap; /*struggling to make button go on bottom*/
     align-items: flex-start;
     justify-content: space-between;
+    /* text-align: justify; */ /*I do not believe this is easier to read*/
 
     max-width: 1100px;
     margin: auto;
