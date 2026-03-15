@@ -88,7 +88,7 @@ public class ModrinthServiceWrapper{
                 dependencies.add(dep);
             }
         }
+        return dependencies;
     }
-    return dependencies;
 }
  }
