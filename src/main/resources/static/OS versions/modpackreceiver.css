@@ -287,3 +287,11 @@ transform:scale(1.05);
 text-align:center;
 margin-bottom:30px;
 }
+
+.upload-limit{
+margin-top:20px;
+margin-bottom:15px;
+font-size:16px;
+color:#e6e6e6;
+text-align:center;
+}
