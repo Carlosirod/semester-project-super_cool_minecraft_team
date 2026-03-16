@@ -216,3 +216,74 @@ body.instructions-page::before {
     font-size: 0.95rem;
   }
 }
+
+.os-instructions{
+text-align:center;
+max-width:800px;
+margin:20px auto 10px auto;
+line-height:1.5;
+}
+
+.instruction-list{
+max-width:600px;
+margin:20px auto 40px auto;
+padding-left:25px;
+text-align:left;
+font-size:18px;
+line-height:1.8;
+}
+
+
+.instruction-list li{
+margin-bottom:8px;
+line-height:1.4;
+}
+
+.instructions-text{
+max-width:700px;
+margin:40px auto;
+padding:25px 30px;
+background:rgba(0,0,0,0.65);
+border-radius:12px;
+text-align:left;
+color:white;
+}
+
+.instruction-intro{
+font-size:18px;
+margin-bottom:20px;
+text-align:center;
+}
+
+
+.instruction-list li{
+margin-bottom:8px;
+}
+
+.instruction-image{
+text-align:center;
+margin:50px auto 120px auto;
+}
+
+.instructions-text + .instruction-image{
+margin-top:40px;
+}
+
+
+.instruction-image img{
+max-width:500px;
+width:100%;
+height:auto;
+border-radius:10px;
+box-shadow:0 6px 20px rgba(0,0,0,0.6);
+cursor:pointer;
+}
+
+.instruction-image img:hover{
+transform:scale(1.05);
+}
+
+.instructions-header{
+text-align:center;
+margin-bottom:30px;
+}
